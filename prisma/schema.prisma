@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum OrderStatus {
+  pending
+  success
+  failed
+  expired
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String   @db.Text
+  price       Int
+  thumbnail   String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  stocks ProductStock[]
+  orders Order[]
+
+  @@index([slug])
+}
+
+model ProductStock {
+  id        String   @id @default(cuid())
+  productId String
+  content   String   @db.Text
+  sold      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  order   Order?
+
+  @@index([productId, sold])
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  trxid         String      @unique
+  status        OrderStatus @default(pending)
+  amount        Int
+  buyerName     String
+  buyerWhatsapp String
+  paymentBrand  String?
+  qrisImage     String?     @db.Text
+  expiredAt     DateTime
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  stockId String?      @unique
+  stock   ProductStock? @relation(fields: [stockId], references: [id])
+
+  @@index([trxid])
+  @@index([status])
+}
+
+model Settings {
+  id            String  @id @default("settings")
+  storeName     String  @default("Auto Order Store")
+  storeLogo     String?
+  gatewayApiKey String?
+  gatewayBaseUrl String?
+  updatedAt     DateTime @updatedAt
+}
+
+model Counter {
+  id    String @id
+  value Int    @default(0)
+}
