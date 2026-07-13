@@ -1,0 +1,28 @@
+name: CI Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-cache: 'npm'
+          node-version: 18
+
+      - name: Install System Dependencies
+        run: npm ci
+
+      - name: Execute Prisma Initialization Check
+        run: npx prisma generate
+
+      - name: Execute TypeScript Validation Compiler
+        run: npm run test
