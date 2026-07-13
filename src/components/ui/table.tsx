@@ -12,14 +12,14 @@ Table.displayName = "Table";
 
 const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <tableSectionRef ref={ref} className={twMerge("[&_tr]:border-b bg-slate-50", className)} {...props} />
+    <thead ref={ref} className={twMerge("[&_tr]:border-b bg-slate-50", className)} {...props} />
   )
 );
 TableHeader.displayName = "TableHeader";
 
 const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <tableSectionRef ref={ref} className={twMerge("[&_tr:last-child]:border-0", className)} {...props} />
+    <tbody ref={ref} className={twMerge("[&_tr:last-child]:border-0", className)} {...props} />
   )
 );
 TableBody.displayName = "TableBody";
@@ -34,6 +34,18 @@ TableRow.displayName = "TableRow";
 const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(
   ({ className, ...props }, ref) => (
     <th ref={ref} className={twMerge("h-10 px-4 text-left align-middle font-medium text-slate-500 [&:has([role=checkbox])]:pr-0", className)} {...props} />
+  )
+);
+TableHead.displayName = "TableHead";
+
+const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
+  ({ className, ...props }, ref) => (
+    <td ref={ref} className={twMerge("p-4 align-middle [&:has([role=checkbox])]:pr-0 text-slate-700", className)} {...props} />
+  )
+);
+TableCell.displayName = "TableCell";
+
+export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell };
   )
 );
 TableHead.displayName = "TableHead";
