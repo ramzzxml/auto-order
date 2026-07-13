@@ -46,15 +46,3 @@ const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<
 TableCell.displayName = "TableCell";
 
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell };
-  )
-);
-TableHead.displayName = "TableHead";
-
-const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
-    <td ref={ref} className={twMerge("p-4 align-middle [&:has([role=checkbox])]:pr-0 text-slate-700", className)} {...props} />
-  )
-);
-TableCell.displayName = "TableCell";
-
-export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell };
