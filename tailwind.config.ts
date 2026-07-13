@@ -1,0 +1,32 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        border: "var(--border)",
+        primary: {
+          DEFAULT: "#2563eb",
+          foreground: "#ffffff",
+        },
+        destructive: {
+          DEFAULT: "#dc2626",
+          foreground: "#ffffff",
+        },
+        muted: {
+          DEFAULT: "#f3f4f6",
+          foreground: "#4b5563",
+        },
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
